@@ -67,7 +67,7 @@ void Delete_item() {
 void Wipe_file() {
     bool sanity = true;
     while (sanity == true) {
-        printf("Are you sure you want to wipe?(y/n): "); //for some reason it prints twice and fix the formatting
+        printf("Are you sure you want to wipe?(y/n): "); //FIX: for some reason it prints twice and fix the formatting
         char userinput;
         scanf("%c", &userinput);
         if (userinput == 'y'  || userinput == 'Y') {
