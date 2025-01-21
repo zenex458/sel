@@ -1,0 +1,2 @@
+* sel
+Collect files/directories in a buffer and perform and action on it.
