@@ -37,16 +37,16 @@ void Append_tofile(char* var) {
     }
 }
 
-void Delete_item() {
+void Delete_item() { 
     FILE *fptr = fopen("cand", "r");
     char nline[10];
     /* char strings [no_of_strings] [max_size_of_each_string]; */
-    char indexarr[10][40]; //change so its dynamically allocated
+    char indexarr[10][40]; //change so its dynamically allocated //FIX: this doesn't work
     if (fptr != NULL) {
         int count = 1;
         while (fgets(nline, sizeof(nline), fptr)) {
             printf("%d %s",count, nline);
-            indexarr[count][30] = *nline;
+            indexarr[count][30] = *nline; //FIX: this doesn't work
             count++;
         }
         fclose(fptr);
