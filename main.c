@@ -39,15 +39,16 @@ void Append_tofile(char *var) {
 
 void Delete_item() {
   FILE *fptr = fopen("cand", "r");
-  char nline[10];
+  int bufsize = 100;
+  char nline[bufsize];
   /* char strings [no_of_strings] [max_size_of_each_string]; */
-  char indexarr[10][40]; // change so its dynamically allocated //FIX: this
+  char indexarr[10][bufsize]; // change so its dynamically allocated //FIX: this
   // doesn't work
   if (fptr != NULL) {
     int count = 1;
     while (fgets(nline, sizeof(nline), fptr)) {
       printf("%d %s", count, nline);
-      indexarr[count][30] = *nline; // FIX: this doesn't work
+      indexarr[count][bufsize] = *nline; // FIX: this doesn't work
       count++;
     }
     fclose(fptr);
@@ -57,9 +58,9 @@ void Delete_item() {
   printf("Enter the index of the file you want to delete: ");
   int index;
   scanf("%d", &index);
-  printf("\nyour val: %s\n", indexarr[index]);
+  printf("\nyour val: %c\n", indexarr[index][bufsize]);
   for (int i; i <= 8; i++) {
-    printf("%s", indexarr[i]);
+    printf("%c", indexarr[i][bufsize]);
   }
 }
 
