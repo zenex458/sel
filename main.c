@@ -46,7 +46,6 @@ void Delete_item() {
   if (fptr != NULL) {
     while (fgets(nline, sizeof(nline), fptr)) {
       printf("%d %s", count, nline);
-      printf("NLINE:%s\n",nline);
       indexarr[count] = strdup(nline);
       count++;
     }
@@ -54,13 +53,10 @@ void Delete_item() {
   } else {
     printf("Unable to open file!\n");
   }
-  printf("Enter the index of the file you want to delete: ");
   int index;
+  printf("Enter the index of the file you want to delete: ");
   scanf("%d", &index);
-  printf("\nyour val: %s\n", indexarr[index]);
-  for (int i; i <= count; i++) {
-    printf("%s\n", indexarr[i]);
-  }
+  printf("your val: %s", indexarr[index]);
 }
 
 
