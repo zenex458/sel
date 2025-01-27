@@ -1,25 +1,25 @@
 //-*- compile-command: "gcc -O -Wall -W -pedantic main.c" -*-
-//Purpose: Collect files/directories in a buffer and perform and action on it
+// Purpose: Collect files/directories in a buffer and perform and action on it
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdbool.h>
 
-//TODO: add types to functions
-//TODO: make tui library for an interface
+// TODO: add types to functions
+// TODO: make tui library for an interface
 
 void help() {
-  printf("Usage: sel[]\nAdd files to a buffer then perform an action on it\n");
-  printf("-a\t Add item to buffer\n");
-  printf("-d\t Delete item from buffer\n");
-  printf("-c<command>\t Perform <command> on everything on the buffer\n");
-  printf("-w\t Wipe the buffer\n");
-  printf("-h\t print help\n");
+  printf("Usage: sel[]\nAdd files to a buffer then perform an action on it\n"
+         "-a\t Add item to buffer\n"
+         "-d\t Delete item from buffer\n"
+         "-c<command>\t Perform <command> on everything on the buffer\n"
+         "-w\t Wipe the buffer\n"
+         "-h\t print help\n");
 }
 
-void Append_tofile(char* var) { //don't hardcode it
+void Append_tofile(char *var) {
   if (var == NULL || strcmp(var, " ") == 0) {
     printf("Argument missing: Missing value to append\n");
   } else {
@@ -39,40 +39,39 @@ void Append_tofile(char* var) { //don't hardcode it
 
 void Delete_item() {
   FILE *fptr = fopen("cand", "r");
-  int bufsize = 100;
-  char nline[bufsize]; //idk what this does
-  //add candidates to array size of 10
-//  char *indexarr[10]; //change so its dynamically allocated
+  char nline[10];
   /* char strings [no_of_strings] [max_size_of_each_string]; */
-  char indexarr[10][bufsize]; //change so its dynamically allocated
+  char indexarr[10][40]; // change so its dynamically allocated //FIX: this
+                         // doesn't work
   if (fptr != NULL) {
-    int count = 0;
+    int count = 1;
     while (fgets(nline, sizeof(nline), fptr)) {
-      indexarr[count][bufsize] = *nline;
-      printf("%s\n",nline);
+      printf("%d %s", count, nline);
+      indexarr[count][30] = *nline; // FIX: this doesn't work
       count++;
     }
     fclose(fptr);
   } else {
     printf("Unable to open file!\n");
   }
-
   printf("Enter the index of the file you want to delete: ");
   int index;
   scanf("%d", &index);
-  printf("\nyour val: %c\n", indexarr[index][bufsize]);
-  for (int i; i <= 7; i++) {
-    printf("%d: %c\n",i, indexarr[i][bufsize]);
+  printf("\nyour val: %s\n", indexarr[index]);
+  for (int i; i <= 8; i++) {
+    printf("%s", indexarr[i]);
   }
 }
 
 void Wipe_file() {
   bool sanity = true;
   while (sanity == true) {
-    printf("Are you sure you want to wipe?(y/n): "); //FIX: for some reason it prints twice and fix the formatting
+    printf("Are you sure you want to wipe?(y/n): "); // FIX: for some reason it
+                                                     // prints twice and fix the
+                                                     // formatting
     char userinput;
     scanf("%c", &userinput);
-    if (userinput == 'y'  || userinput == 'Y') {
+    if (userinput == 'y' || userinput == 'Y') {
       FILE *fptr;
       fptr = fopen("cand", "w");
       fclose(fptr);
@@ -83,7 +82,7 @@ void Wipe_file() {
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (strcmp(argv[1], "-c") == 0) {
     printf("ooga");
   } else if (strcmp(argv[1], "-a") == 0) {
