@@ -19,7 +19,7 @@ void help() {
   printf("-h\t print help\n");
 }
 
-void Append_tofile(char* var) {
+void Append_tofile(char* var) { //don't hardcode it
   if (var == NULL || strcmp(var, " ") == 0) {
     printf("Argument missing: Missing value to append\n");
   } else {
@@ -39,29 +39,31 @@ void Append_tofile(char* var) {
 
 void Delete_item() {
   FILE *fptr = fopen("cand", "r");
-  char nline[10];
+  int bufsize = 100;
+  char nline[bufsize]; //idk what this does
+  //add candidates to array size of 10
+//  char *indexarr[10]; //change so its dynamically allocated
   /* char strings [no_of_strings] [max_size_of_each_string]; */
-  char indexarr[10][40]; //change so its dynamically allocated //FIX: this doesn't work
+  char indexarr[10][bufsize]; //change so its dynamically allocated
   if (fptr != NULL) {
-    int count = 1;
+    int count = 0;
     while (fgets(nline, sizeof(nline), fptr)) {
-      printf("%d %s",count, nline);
-      indexarr[count][30] = *nline; //FIX: this doesn't work
+      indexarr[count][bufsize] = *nline;
+      printf("%s\n",nline);
       count++;
     }
     fclose(fptr);
   } else {
     printf("Unable to open file!\n");
   }
+
   printf("Enter the index of the file you want to delete: ");
   int index;
   scanf("%d", &index);
-  printf("\nyour val: %s\n", indexarr[index]);
-  for (int i; i <= 8; i++) {
-    printf("%s", indexarr[i]);
+  printf("\nyour val: %c\n", indexarr[index][bufsize]);
+  for (int i; i <= 7; i++) {
+    printf("%d: %c\n",i, indexarr[i][bufsize]);
   }
-
-
 }
 
 void Wipe_file() {
