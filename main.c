@@ -59,14 +59,10 @@ void Delete_item() {
   printf("your val: %s", indexarr[index]);
 }
 
-
-
 void Wipe_file() {
   bool sanity = true;
   while (sanity == true) {
-    printf("Are you sure you want to wipe?(y/n): "); // FIX: for some reason it
-    // prints twice and fix the
-    // formatting
+    printf("Are you sure you want to wipe?(y/n): ");
     char userinput;
     scanf("%c", &userinput);
     if (userinput == 'y' || userinput == 'Y') {
