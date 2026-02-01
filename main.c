@@ -7,21 +7,20 @@
 #include <string.h>
 #include <unistd.h>
 
-// TODO: add types to functions
-// TODO: make tui library for an interface
-
-void help() {
+int help() {
   printf("Usage: sel[]\nAdd files to a buffer then perform an action on it\n"
          "-a\t Add item to buffer\n"
          "-d\t Delete item from buffer\n"
          "-c<command>\t Perform <command> on everything on the buffer\n"
          "-w\t Wipe the buffer\n"
          "-h\t print help\n");
+  return 0;
 }
 
-void Append_tofile(char *var) {
+int Append_tofile(char *var) {
   if (var == NULL || strcmp(var, " ") == 0) {
     printf("Argument missing: Missing value to append\n");
+    return -1;
   } else {
     FILE *fptr;
     fptr = fopen("cand", "r");
@@ -35,13 +34,15 @@ void Append_tofile(char *var) {
       fclose(fptr);
     }
   }
+  return 0;
 }
 
-void Delete_item() {
+int Delete_item() {
   FILE *fptr = fopen("cand", "r");
   int bufsize = 1024;
   char nline[bufsize];
   char *indexarr[10]; // change so its dynamically allocated
+  int sizeofarr = sizeof(indexarr) / sizeof(indexarr[0]);
   int count = 0;
   if (fptr != NULL) {
     while (fgets(nline, sizeof(nline), fptr)) {
@@ -51,15 +52,29 @@ void Delete_item() {
     }
     fclose(fptr);
   } else {
-    printf("Unable to open file!\n");
+    printf("Unable to open file\n");
+    return -1;
   }
-  int index;
+  int user_index;
   printf("Enter the index of the file you want to delete: ");
-  scanf("%d", &index);
-  printf("your val: %s", indexarr[index]);
-}
+  scanf("%d", &user_index);
 
-void Wipe_file() {
+  indexarr[user_index] = NULL; // remove selected item from array
+
+  FILE *Sfptr = fopen("cand", "a");
+  if (fptr != NULL) {
+    for (int i; i <= 8; i++) {
+      fprintf(Sfptr, "%s\n", indexarr[i]);
+    }
+
+    fclose(Sfptr);
+  } else {
+    printf("Unable to open file!\n");
+    return -1;
+  }
+  return 0;
+}
+int Wipe_file() {
   bool sanity = true;
   while (sanity == true) {
     printf("Are you sure you want to wipe?(y/n): ");
@@ -74,11 +89,12 @@ void Wipe_file() {
       sanity = false;
     }
   }
+  return 0;
 }
 
 int main(int argc, char *argv[]) {
   if (strcmp(argv[1], "-c") == 0) {
-    printf("ooga");
+    printf("preform command on buffer\n");
   } else if (strcmp(argv[1], "-a") == 0) {
     Append_tofile(argv[2]);
   } else if (strcmp(argv[1], "-d") == 0) {
